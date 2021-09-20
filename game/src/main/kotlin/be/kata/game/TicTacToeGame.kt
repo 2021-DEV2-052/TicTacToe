@@ -13,11 +13,16 @@ class TicTacToeGame {
 
     private var ended: Boolean = false
 
-    val state: State get() = State(gameField.toList(), activePlayer, ended)
+    private var winner: Player? = null
+
+    val state: State get() = State(gameField.toList(), activePlayer, ended, winner)
 
     fun playTurn(squareOrdinalToClaim: Int): State {
         claimSquare(squareOrdinalToClaim)
         checkForEndCondition()
+        if (findWinComboMatch()) {
+            winner = activePlayer
+        }
         switchPlayer()
         return state
     }
@@ -47,5 +52,10 @@ class TicTacToeGame {
         PLAYER_1, PLAYER_2
     }
 
-    data class State(val field: List<TicTacToeSquare>, val activePlayer: Player, val ended: Boolean, val winner: Player? = null)
+    data class State(
+        val field: List<TicTacToeSquare>,
+        val activePlayer: Player,
+        val ended: Boolean,
+        val winner: Player?
+    )
 }
