@@ -27,6 +27,7 @@ import be.kata.game.Nothing
 import be.kata.game.TicTacToeGame
 import be.kata.game.TicTacToeSquare
 import be.kata.tictactoe.R
+import be.kata.tictactoe.TicTacToeActivity
 
 @ExperimentalFoundationApi
 @Preview(showBackground = true)
@@ -148,4 +149,9 @@ fun TicTacToeStatusText(status: TicTacToeGame.Status) {
         else -> throw IllegalArgumentException("this should not happen")
     }
     Text(text = text, color = MaterialTheme.colors.onSurface)
+}
+
+@Composable
+fun TicTacToeInfoText(status: TicTacToeActivity.UIState) {
+    Text(text = "", color = MaterialTheme.colors.onSurface)
 }
