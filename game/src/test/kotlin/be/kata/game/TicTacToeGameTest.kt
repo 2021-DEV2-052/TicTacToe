@@ -64,7 +64,15 @@ class TicTacToeGameTest {
 
     @Test
     fun gameEndsAfter9Turns() {
-        repeat(9) { game.playTurn(it) }
+        game.playTurn(0)
+        game.playTurn(3)
+        game.playTurn(1)
+        game.playTurn(4)
+        game.playTurn(5)
+        game.playTurn(2)
+        game.playTurn(6)
+        game.playTurn(8)
+        game.playTurn(7)
         assertTrue("game should be stopped after 9 turns") { game.state.ended }
     }
 

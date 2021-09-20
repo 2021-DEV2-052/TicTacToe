@@ -22,6 +22,9 @@ class TicTacToeGame {
     val state: State get() = State(gameField.toList(), activePlayer, ended, winner)
 
     fun playTurn(squareOrdinalToClaim: Int): State {
+        if (ended) {
+            throw IllegalStateException("Game has ended, you cannot play anymore")
+        }
         claimSquare(squareOrdinalToClaim)
         checkForEndCondition()
         checkForWinner()
