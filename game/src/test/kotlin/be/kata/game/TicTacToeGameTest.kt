@@ -48,4 +48,11 @@ class TicTacToeGameTest {
             game.claimSquare(squareToClaim)
         }
     }
+
+    @Test
+    fun playersWillSwitchAfterTurnPlayed() {
+        val squareToClaim = (0 until TicTacToeGame.FIELD_SIZE).random()
+        game.claimSquare(squareToClaim)
+        assertEquals(TicTacToeGame.Player.PLAYER_2, game.activePlayer, " After a turn played, activeplayer should be player 2")
+    }
 }
