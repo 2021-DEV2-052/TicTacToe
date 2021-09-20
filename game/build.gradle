@@ -1,0 +1,11 @@
+plugins {
+    id 'kotlin'
+}
+
+dependencies {
+    testImplementation "org.jetbrains.kotlin:kotlin-test"
+}
+
+test {
+    useTestNG()
+}
