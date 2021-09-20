@@ -72,10 +72,10 @@ fun TicTacToeSquareView(
 
 @ExperimentalFoundationApi
 @Composable
-fun TicTacToeGrid(game: TicTacToeGame.State) {
+fun TicTacToeGrid(game: TicTacToeGame.State, onSquareClick: (Int) -> Unit) {
     LazyVerticalGrid(cells = GridCells.Fixed(3), modifier = Modifier.fillMaxWidth()) {
         itemsIndexed(game.field) { index, squareState ->
-            TicTacToeSquareView(squareState, index) {}
+            TicTacToeSquareView(squareState, index) {  }
         }
     }
 }
