@@ -51,28 +51,7 @@ fun TicTacToeScreen(gameState: TicTacToeGame.State, onSquareClick: (Int) -> Unit
             color = MaterialTheme.colors.onSurface
         )
         TicTacToeGrid(boardState = gameState.field, onSquareClick = onSquareClick)
-        when (gameState.status) {
-            is TicTacToeGame.Winner -> {
-                Text(
-                    text = stringResource(
-                        id = R.string.win_message,
-                        if ((gameState.status as TicTacToeGame.Winner).winningPlayer == TicTacToeGame.Player.PLAYER_1)
-                            stringResource(R.string.player1) else stringResource(R.string.player_2)
-                    )
-                )
-            }
-            is TicTacToeGame.Draw -> {
-                Text(text = stringResource(id = R.string.draw_message))
-            }
-            is TicTacToeGame.Playing -> {
-                Text(text = stringResource(
-                    id = R.string.playing_message,
-                    if ((gameState.status as TicTacToeGame.Playing).activePlayer == TicTacToeGame.Player.PLAYER_1)
-                        stringResource(R.string.player1) else stringResource(R.string.player_2)
-                ))
-            }
-            else -> throw IllegalArgumentException("this should not happen")
-        }
+        TicTacToeStatusText(status = gameState.status)
     }
 }
 
@@ -122,7 +101,10 @@ fun TicTacToeSquareView(
                             contentDescription = "x",
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(color = Color.Gray, shape = RoundedCornerShape(4.dp))
+                                .background(
+                                    color = Color.Gray,
+                                    shape = RoundedCornerShape(4.dp)
+                                )
                         )
                     }
                     TicTacToeGame.Player.PLAYER_2 -> {
@@ -131,11 +113,39 @@ fun TicTacToeSquareView(
                             contentDescription = "0",
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(color = Color.Gray, shape = RoundedCornerShape(4.dp))
+                                .background(
+                                    color = Color.Gray,
+                                    shape = RoundedCornerShape(4.dp)
+                                )
                         )
                     }
                 }
             }
         }
     }
+}
+
+@Composable
+fun TicTacToeStatusText(status: TicTacToeGame.Status) {
+    val text = when (status) {
+        is TicTacToeGame.Winner -> {
+            stringResource(
+                id = R.string.win_message,
+                if (status.winningPlayer == TicTacToeGame.Player.PLAYER_1)
+                    stringResource(R.string.player1) else stringResource(R.string.player_2)
+            )
+        }
+        is TicTacToeGame.Draw -> {
+            stringResource(id = R.string.draw_message)
+        }
+        is TicTacToeGame.Playing -> {
+            stringResource(
+                id = R.string.playing_message,
+                if (status.activePlayer == TicTacToeGame.Player.PLAYER_1)
+                    stringResource(R.string.player1) else stringResource(R.string.player_2)
+            )
+        }
+        else -> throw IllegalArgumentException("this should not happen")
+    }
+    Text(text = text, color = MaterialTheme.colors.onSurface)
 }
