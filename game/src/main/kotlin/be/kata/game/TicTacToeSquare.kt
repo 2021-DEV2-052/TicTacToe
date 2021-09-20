@@ -12,6 +12,6 @@ object Nothing: TicTacToeSquare() {
 
 data class Claimed(override val player: TicTacToeGame.Player): TicTacToeSquare() {
     override fun claim(player: TicTacToeGame.Player): TicTacToeSquare {
-        throw IllegalArgumentException("You cannot claim a square twice")
+        throw SquareAlreadyClaimedException("You cannot claim a square twice")
     }
 }
