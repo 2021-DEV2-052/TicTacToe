@@ -52,6 +52,16 @@ fun TicTacToeScreen(gameState: TicTacToeGame.State, onSquareClick: (Int) -> Unit
             color = MaterialTheme.colors.onSurface
         )
         TicTacToeGrid(boardState = gameState.field, onSquareClick = onSquareClick)
+        if (gameState.status is TicTacToeGame.Winner) {
+            Text(
+                text = stringResource(
+                    id = R.string.winMessage,
+                    if ((gameState.status as TicTacToeGame.Winner).winningPlayer == TicTacToeGame.Player.PLAYER_1) stringResource(
+                        R.string.player1
+                    ) else stringResource(R.string.player_2)
+                )
+            )
+        }
     }
 }
 
