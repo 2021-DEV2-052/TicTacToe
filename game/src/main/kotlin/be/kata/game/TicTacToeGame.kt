@@ -6,6 +6,7 @@ class TicTacToeGame {
         const val FIELD_SIZE = 9
     }
 
+    val ended: Boolean get() = false
     private val _field: Array<TicTacToeSquare> = Array(9) { Nothing }
     val field get() = _field.toList()
 

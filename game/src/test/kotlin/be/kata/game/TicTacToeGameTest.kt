@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 
 class TicTacToeGameTest {
@@ -54,8 +55,17 @@ class TicTacToeGameTest {
     @Test
     fun playersWillSwitchAfterTurnPlayed() {
         game.claimSquare(generateNumberToClaim())
-        assertEquals(TicTacToeGame.Player.PLAYER_2, game.activePlayer, " After a turn played, activeplayer should be player 2")
+        assertEquals(
+            TicTacToeGame.Player.PLAYER_2,
+            game.activePlayer,
+            " After a turn played, activeplayer should be player 2"
+        )
     }
 
+    @Test
+    fun gameEndsAfter9Turns() {
+        repeat(9) { game.claimSquare(it) }
+        assertTrue("game should be stopped after 9 turns") { game.ended }
+    }
 
 }
