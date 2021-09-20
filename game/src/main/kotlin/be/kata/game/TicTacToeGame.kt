@@ -13,17 +13,14 @@ class TicTacToeGame {
 
     private val gameField: Array<TicTacToeSquare> = Array(FIELD_SIZE) { Nothing }
 
-    private var activePlayer: Player = Player.PLAYER_1
+    private var status: Status = Playing(Player.PLAYER_1)
 
-    private var status: Status = Playing
-
-    val state: State get() = State(gameField.toList(), activePlayer, status)
+    val state: State get() = State(gameField.toList(), status)
 
     fun playTurn(squareOrdinalToClaim: Int): State {
         checkIfPlayingIsAllowed()
         claimSquare(squareOrdinalToClaim)
-        alterStatusIfNeeded()
-        switchPlayer()
+        alterStatus()
         return state
     }
 
@@ -34,29 +31,31 @@ class TicTacToeGame {
     }
 
     private fun claimSquare(squareOrdinal: Int) {
-        gameField[squareOrdinal] = gameField[squareOrdinal].claim(activePlayer)
+        gameField[squareOrdinal] = gameField[squareOrdinal].claim(activePlayer())
     }
 
-    private fun switchPlayer() {
-        activePlayer = Player.values().first { it != activePlayer }
-    }
-
-    private fun alterStatusIfNeeded() {
+    private fun alterStatus() {
         val winComboMatches = winComboMatches()
-        if (allSquaresClaimed() || winComboMatches) {
-            status = if (winComboMatches) {
-                Winner(activePlayer)
+        status = if (allSquaresClaimed() || winComboMatches) {
+            if (winComboMatches) {
+                Winner(activePlayer())
             } else {
                 Draw
             }
+        } else {
+            Playing(otherPlayer())
         }
     }
+
+    private fun otherPlayer(): Player = Player.values().first { it != activePlayer() }
+
+    private fun activePlayer(): Player = (status as Playing).activePlayer
 
     private fun winComboMatches() =
         WIN_COMBOS
             .any { winCombo ->
                 winCombo.map { squareOrdinal -> gameField[squareOrdinal] }
-                    .all { square -> square is Claimed && square.player == activePlayer }
+                    .all { square -> square is Claimed && square.player == activePlayer() }
             }
 
     private fun allSquaresClaimed() = gameField.all { square -> square is Claimed }
@@ -67,7 +66,6 @@ class TicTacToeGame {
 
     data class State(
         val field: List<TicTacToeSquare>,
-        val activePlayer: Player,
         val status: Status
     )
 
@@ -75,7 +73,7 @@ class TicTacToeGame {
         abstract val ended: Boolean
     }
 
-    object Playing : Status() {
+    data class Playing(val activePlayer: Player) : Status() {
         override val ended: Boolean = false
     }
 

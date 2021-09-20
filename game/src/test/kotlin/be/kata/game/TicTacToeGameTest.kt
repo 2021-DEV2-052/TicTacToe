@@ -22,7 +22,7 @@ class TicTacToeGameTest {
     fun gameStartsWithPlayer1() {
         assertEquals(
             TicTacToeGame.Player.PLAYER_1,
-            game.state.activePlayer,
+            (game.state.status as TicTacToeGame.Playing).activePlayer,
             "A game always starts with player 1"
         )
     }
@@ -57,7 +57,7 @@ class TicTacToeGameTest {
         val gameState = game.playTurn(generateNumberToClaim())
         assertEquals(
             TicTacToeGame.Player.PLAYER_2,
-            gameState.activePlayer,
+            (gameState.status as TicTacToeGame.Playing).activePlayer,
             " After a turn played, activeplayer should be player 2"
         )
     }
