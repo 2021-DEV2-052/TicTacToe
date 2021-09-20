@@ -7,36 +7,45 @@ class TicTacToeGame {
         private val WIN_COMBO = listOf(0, 1, 2)
     }
 
-    private val _field: Array<TicTacToeSquare> = Array(9) { Nothing }
-    val field get() = _field.toList()
+    private val gameField: Array<TicTacToeSquare> = Array(FIELD_SIZE) { Nothing }
 
-    private var _activePlayer: Player = Player.PLAYER_1
-    val activePlayer get() = _activePlayer
+    private var activePlayer: Player = Player.PLAYER_1
 
-    private var _ended: Boolean = false
-    val ended: Boolean get() = _ended
+    private var ended: Boolean = false
 
-    fun playTurn(squareOrdinalToClaim: Int) {
+    val state: State get() = State(gameField.toList(), activePlayer, ended)
+
+    fun playTurn(squareOrdinalToClaim: Int): State {
         claimSquare(squareOrdinalToClaim)
         checkForEndCondition()
         switchPlayer()
+        return state
     }
 
     private fun claimSquare(squareOrdinal: Int) {
-        _field[squareOrdinal] = _field[squareOrdinal].claim(activePlayer)
-    }
-
-    private fun checkForEndCondition() {
-        if (field.all { it is Claimed } || WIN_COMBO.map { _field[it] }.all { it is Claimed && it.player == activePlayer }) {
-            _ended = true
-        }
+        gameField[squareOrdinal] = gameField[squareOrdinal].claim(activePlayer)
     }
 
     private fun switchPlayer() {
-        _activePlayer = Player.values().first { it != activePlayer }
+        activePlayer = Player.values().first { it != activePlayer }
     }
+
+    private fun checkForEndCondition() {
+        if (allSquaresClaimed() || findWinComboMatch()) {
+            ended = true
+        }
+    }
+
+    private fun findWinComboMatch() =
+        WIN_COMBO
+            .map { squareOrdinal -> gameField[squareOrdinal] }
+            .all { square -> square is Claimed && square.player == activePlayer }
+
+    private fun allSquaresClaimed() = gameField.all { square -> square is Claimed }
 
     enum class Player {
         PLAYER_1, PLAYER_2
     }
+
+    data class State(val field: List<TicTacToeSquare>, val activePlayer: Player, val ended: Boolean)
 }
