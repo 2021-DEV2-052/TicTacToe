@@ -13,6 +13,9 @@ class TicTacToeGame {
     val activePlayer get() = _activePlayer
 
     fun claimSquare(squareToClaim: Int) {
+        if (_field[squareToClaim] != null) {
+            throw IllegalArgumentException("You cannot claim a square twice")
+        }
         _field[squareToClaim] = Player.PLAYER_1
     }
 
