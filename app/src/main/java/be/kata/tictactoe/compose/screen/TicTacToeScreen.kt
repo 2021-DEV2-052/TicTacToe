@@ -22,10 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import be.kata.game.Claimed
+import be.kata.game.*
 import be.kata.game.Nothing
-import be.kata.game.TicTacToeGame
-import be.kata.game.TicTacToeSquare
 import be.kata.tictactoe.R
 import be.kata.tictactoe.TicTacToeActivity
 
@@ -154,7 +152,14 @@ fun TicTacToeStatusText(status: TicTacToeGame.Status) {
 @Composable
 fun TicTacToeInfoText(status: TicTacToeActivity.UIState) {
     val text = when (status) {
-        is TicTacToeActivity.ErrorState -> stringResource(id = R.string.already_claimed)
+        is TicTacToeActivity.ErrorState ->
+            when (status.exception) {
+                is GameHasEndedException -> stringResource(id = R.string.game_ended)
+                is SquareAlreadyClaimedException -> stringResource(id = R.string.already_claimed)
+                else -> throw IllegalArgumentException("this should not happen")
+            }
+
+        TicTacToeActivity.Normal -> ""
         else -> throw IllegalArgumentException("this should not happen")
     }
     Text(text = text, color = MaterialTheme.colors.onSurface)
