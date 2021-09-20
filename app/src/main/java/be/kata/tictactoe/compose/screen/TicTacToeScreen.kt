@@ -153,5 +153,9 @@ fun TicTacToeStatusText(status: TicTacToeGame.Status) {
 
 @Composable
 fun TicTacToeInfoText(status: TicTacToeActivity.UIState) {
-    Text(text = "", color = MaterialTheme.colors.onSurface)
+    val text = when (status) {
+        is TicTacToeActivity.ErrorState -> stringResource(id = R.string.already_claimed)
+        else -> throw IllegalArgumentException("this should not happen")
+    }
+    Text(text = text, color = MaterialTheme.colors.onSurface)
 }
