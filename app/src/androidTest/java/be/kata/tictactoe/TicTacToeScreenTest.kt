@@ -43,4 +43,19 @@ class TicTacToeScreenTest {
         }
         composeRule.onNode(hasText("draw", true)).assertIsDisplayed()
     }
+
+    @ExperimentalFoundationApi
+    @Test
+    fun testScreenHasPlayingMessage() {
+        composeRule.setContent {
+            TicTacToeScreen(
+                gameState = TicTacToeGame.State(
+                    List(TicTacToeGame.FIELD_SIZE) { Nothing },
+                    TicTacToeGame.Playing(TicTacToeGame.Player.PLAYER_1)
+                ),
+                onSquareClick = { },
+            )
+        }
+        composeRule.onNode(hasText("turn", true)).assertIsDisplayed()
+    }
 }
