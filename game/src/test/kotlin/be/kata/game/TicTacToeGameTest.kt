@@ -92,4 +92,15 @@ class TicTacToeGameTest {
         )
     }
 
+    @Test
+    fun playerCannotPlayOnAnEndedGame() {
+        game.playTurn(0)
+        game.playTurn(3)
+        game.playTurn(1)
+        game.playTurn(4)
+        game.playTurn(2)
+        assertThrows<IllegalStateException>("playing after end is not possible") {
+            game.playTurn(5)
+        }
+    }
 }
