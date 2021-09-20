@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TicTacToe</string>
-    <string name="winMessage">%1$s has won!</string>
+    <string name="win_message">%1$s has won!</string>
     <string name="player1">Player 1</string>
     <string name="player_2">Player 2</string>
+    <string name="draw_message">It\'s a draw</string>
 </resources>

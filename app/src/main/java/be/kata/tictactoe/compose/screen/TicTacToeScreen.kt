@@ -28,7 +28,6 @@ import be.kata.game.TicTacToeGame
 import be.kata.game.TicTacToeSquare
 import be.kata.tictactoe.R
 
-
 @ExperimentalFoundationApi
 @Preview(showBackground = true)
 @Composable
@@ -55,12 +54,13 @@ fun TicTacToeScreen(gameState: TicTacToeGame.State, onSquareClick: (Int) -> Unit
         if (gameState.status is TicTacToeGame.Winner) {
             Text(
                 text = stringResource(
-                    id = R.string.winMessage,
-                    if ((gameState.status as TicTacToeGame.Winner).winningPlayer == TicTacToeGame.Player.PLAYER_1) stringResource(
-                        R.string.player1
-                    ) else stringResource(R.string.player_2)
+                    id = R.string.win_message,
+                    if ((gameState.status as TicTacToeGame.Winner).winningPlayer == TicTacToeGame.Player.PLAYER_1)
+                        stringResource(R.string.player1) else stringResource(R.string.player_2)
                 )
             )
+        } else if (gameState.status is TicTacToeGame.Draw) {
+            Text(text = stringResource(id = R.string.draw_message))
         }
     }
 }
