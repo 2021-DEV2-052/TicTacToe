@@ -16,4 +16,8 @@ class TicTacToeActivity : AppCompatActivity() {
             }
         }
     }
+
+    sealed class UIState
+    data class ErrorState(val exception: Exception) : UIState()
+    object Normal : UIState()
 }

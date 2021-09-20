@@ -5,6 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
+import be.kata.game.GameHasEndedException
 import be.kata.game.SquareAlreadyClaimedException
 import be.kata.tictactoe.compose.screen.TicTacToeInfoText
 import org.junit.Rule
@@ -31,7 +32,7 @@ class TicTacToeInfoTextTest {
     fun testScreenHasInfoWhenClickingEndedGame() {
         composeRule.setContent {
             TicTacToeInfoText(
-                TicTacToeActivity.ErrorState(exception = SquareAlreadyClaimedException(""))
+                TicTacToeActivity.ErrorState(exception = GameHasEndedException(""))
             )
         }
         composeRule.onNode(hasText("has ended", true)).assertIsDisplayed()
@@ -42,7 +43,7 @@ class TicTacToeInfoTextTest {
     fun testScreenHasNoInfoWhenClickingNormalState() {
         composeRule.setContent {
             TicTacToeInfoText(
-                TicTacToeActivity.ErrorState(exception = SquareAlreadyClaimedException(""))
+                TicTacToeActivity.Normal
             )
         }
         composeRule.onNode(hasText("already claimed", true)).assertIsNotDisplayed()
