@@ -1,8 +1,13 @@
 package be.kata.tictactoe
 
+import androidx.compose.ui.test.assertContentDescriptionContains
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
+import be.kata.game.Claimed
+import be.kata.game.Nothing
+import be.kata.game.TicTacToeGame
 import be.kata.tictactoe.compose.screen.TicTacToeSquareView
 import org.junit.Assert
 import org.junit.Rule
@@ -20,6 +25,7 @@ class TicTacToeSquareTest {
         val ordinal = 20
         composeRule.setContent {
             TicTacToeSquareView(
+                squareState = Claimed(TicTacToeGame.Player.PLAYER_2),
                 ordinal = ordinal,
                 onClick = onClick
             )
@@ -30,5 +36,37 @@ class TicTacToeSquareTest {
             ordinal,
             number
         )
+    }
+
+    @Test
+    fun testSquareShowsCorrectImage1() {
+        composeRule.setContent {
+            TicTacToeSquareView(
+                squareState = Claimed(TicTacToeGame.Player.PLAYER_1),
+                ordinal = 0,
+                onClick = { }
+            )
+        }
+        composeRule.onRoot().onChild().assertContentDescriptionContains("x")
+    }
+
+    @Test
+    fun testSquareShowsCorrectImage2() {
+        composeRule.setContent {
+            TicTacToeSquareView(
+                squareState = Claimed(TicTacToeGame.Player.PLAYER_2),
+                ordinal = 0,
+                onClick = { }
+            )
+        }
+        composeRule.onRoot().onChild().assertContentDescriptionContains("0")
+    }
+
+    @Test
+    fun testSquareShowsCorrectImageNothing() {
+        composeRule.setContent {
+            TicTacToeSquareView(squareState = Nothing, ordinal = 0, onClick = { })
+        }
+        composeRule.onRoot().onChild().assertContentDescriptionContains("nothing")
     }
 }

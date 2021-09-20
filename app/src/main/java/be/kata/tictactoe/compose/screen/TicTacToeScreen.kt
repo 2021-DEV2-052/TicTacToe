@@ -12,9 +12,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import be.kata.game.TicTacToeSquare
 
 @Composable
 fun TicTacToeSquareView(
+    squareState: TicTacToeSquare,
     ordinal: Int,
     size: Dp = (LocalConfiguration.current.screenWidthDp / 3).dp,
     onClick: (Int) -> Unit,
