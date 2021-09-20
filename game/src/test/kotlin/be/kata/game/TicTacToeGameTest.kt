@@ -10,6 +10,8 @@ class TicTacToeGameTest {
 
     private lateinit var game: TicTacToeGame
 
+    private fun generateNumberToClaim() = (0 until TicTacToeGame.FIELD_SIZE).random()
+
     @BeforeEach
     fun setup() {
         game = TicTacToeGame()
@@ -31,7 +33,7 @@ class TicTacToeGameTest {
 
     @Test
     fun playersCanClaimSquare() {
-        val squareToClaim = (0 until TicTacToeGame.FIELD_SIZE).random()
+        val squareToClaim = generateNumberToClaim()
         game.claimSquare(squareToClaim)
         assertEquals(
             TicTacToeGame.Player.PLAYER_1,
@@ -42,7 +44,7 @@ class TicTacToeGameTest {
 
     @Test
     fun playersCannotClaimAClaimedSquare() {
-        val squareToClaim = (0 until TicTacToeGame.FIELD_SIZE).random()
+        val squareToClaim = generateNumberToClaim()
         game.claimSquare(squareToClaim)
         assertThrows<IllegalArgumentException>("Claiming a square twice should throw Exception") {
             game.claimSquare(squareToClaim)
@@ -51,8 +53,9 @@ class TicTacToeGameTest {
 
     @Test
     fun playersWillSwitchAfterTurnPlayed() {
-        val squareToClaim = (0 until TicTacToeGame.FIELD_SIZE).random()
-        game.claimSquare(squareToClaim)
+        game.claimSquare(generateNumberToClaim())
         assertEquals(TicTacToeGame.Player.PLAYER_2, game.activePlayer, " After a turn played, activeplayer should be player 2")
     }
+
+
 }
