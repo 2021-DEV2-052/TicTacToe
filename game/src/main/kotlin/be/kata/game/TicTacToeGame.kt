@@ -15,12 +15,22 @@ class TicTacToeGame {
     private var _ended: Boolean = false
     val ended: Boolean get() = _ended
 
-    fun claimSquare(squareOrdinal: Int) {
+    fun playTurn(squareOrdinalToClaim: Int) {
+        claimSquare(squareOrdinalToClaim)
+        switchPlayer()
+        checkForEndCondition()
+    }
+
+    private fun claimSquare(squareOrdinal: Int) {
         _field[squareOrdinal] = _field[squareOrdinal].claim(activePlayer)
+    }
+
+    private fun checkForEndCondition() {
+        if (field.all { it is Claimed }) { _ended = true }
+    }
+
+    private fun switchPlayer() {
         _activePlayer = Player.values().first { it != activePlayer }
-        if (field.all { it is Claimed }) {
-            _ended = true
-        }
     }
 
     enum class Player {
