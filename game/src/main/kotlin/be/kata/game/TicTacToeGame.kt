@@ -6,17 +6,14 @@ class TicTacToeGame {
         const val FIELD_SIZE = 9
     }
 
-    private val _field: Array<Player?> = arrayOfNulls(FIELD_SIZE)
-    val field get() = _field.asList()
+    private val _field: Array<TicTacToeSquare> = Array(9) { Nothing }
+    val field get() = _field.toList()
 
     private var _activePlayer: Player = Player.PLAYER_1
     val activePlayer get() = _activePlayer
 
-    fun claimSquare(squareToClaim: Int) {
-        if (_field[squareToClaim] != null) {
-            throw IllegalArgumentException("You cannot claim a square twice")
-        }
-        _field[squareToClaim] = Player.PLAYER_1
+    fun claimSquare(squareOrdinal: Int) {
+        _field[squareOrdinal] =_field[squareOrdinal].claim(activePlayer)
     }
 
     enum class Player {

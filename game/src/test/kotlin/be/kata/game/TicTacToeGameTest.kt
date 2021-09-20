@@ -17,19 +17,27 @@ class TicTacToeGameTest {
 
     @Test
     fun gameStartsWithPlayer1() {
-        assert(game.activePlayer == TicTacToeGame.Player.PLAYER_1)
+        assertEquals(
+            TicTacToeGame.Player.PLAYER_1,
+            game.activePlayer,
+            "A game always starts with player 1"
+        )
     }
 
     @Test
     fun gameExposesAFieldWith9Squares() {
-        assert(game.field.size == 9)
+        assertEquals(9, game.field.size, "Field should contain 9 squares")
     }
 
     @Test
     fun playersCanClaimSquare() {
         val squareToClaim = (0 until TicTacToeGame.FIELD_SIZE).random()
         game.claimSquare(squareToClaim)
-        assertEquals(TicTacToeGame.Player.PLAYER_1, game.field[squareToClaim])
+        assertEquals(
+            TicTacToeGame.Player.PLAYER_1,
+            (game.field[squareToClaim] as Claimed).player,
+            "Field should be claimed by player 1"
+        )
     }
 
     @Test
