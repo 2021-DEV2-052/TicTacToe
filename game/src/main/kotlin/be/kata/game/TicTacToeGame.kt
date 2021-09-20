@@ -12,6 +12,10 @@ class TicTacToeGame {
     private var _activePlayer: Player = Player.PLAYER_1
     val activePlayer get() = _activePlayer
 
+    fun claimSquare(squareToClaim: Int) {
+
+    }
+
     enum class Player {
         PLAYER_1, PLAYER_2
     }
