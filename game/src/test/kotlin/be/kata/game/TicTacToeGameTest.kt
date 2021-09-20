@@ -2,6 +2,7 @@ package be.kata.game
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 
@@ -29,5 +30,14 @@ class TicTacToeGameTest {
         val squareToClaim = (0 until TicTacToeGame.FIELD_SIZE).random()
         game.claimSquare(squareToClaim)
         assertEquals(TicTacToeGame.Player.PLAYER_1, game.field[squareToClaim])
+    }
+
+    @Test
+    fun playersCannotClaimAClaimedSquare() {
+        val squareToClaim = (0 until TicTacToeGame.FIELD_SIZE).random()
+        game.claimSquare(squareToClaim)
+        assertThrows<IllegalArgumentException>("Claiming a square twice should throw Exception") {
+            game.claimSquare(squareToClaim)
+        }
     }
 }
