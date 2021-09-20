@@ -16,7 +16,7 @@ class TicTacToeScreenTest {
 
     @ExperimentalFoundationApi
     @Test
-    fun testScreenHasWinField() {
+    fun testScreenHasWinMessage() {
         composeRule.setContent {
             TicTacToeScreen(
                 gameState = TicTacToeGame.State(
@@ -27,5 +27,20 @@ class TicTacToeScreenTest {
             )
         }
         composeRule.onNode(hasText("has won", true)).assertIsDisplayed()
+    }
+
+    @ExperimentalFoundationApi
+    @Test
+    fun testScreenHasDrawMessage() {
+        composeRule.setContent {
+            TicTacToeScreen(
+                gameState = TicTacToeGame.State(
+                    List(TicTacToeGame.FIELD_SIZE) { Nothing },
+                    TicTacToeGame.Draw
+                ),
+                onSquareClick = { },
+            )
+        }
+        composeRule.onNode(hasText("draw", true)).assertIsDisplayed()
     }
 }
