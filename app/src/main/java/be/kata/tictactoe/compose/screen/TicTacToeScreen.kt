@@ -1,11 +1,16 @@
 package be.kata.tictactoe.compose.screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -62,5 +67,12 @@ fun TicTacToeSquareView(
                 }
             }
         }
+    }
+}
+
+@ExperimentalFoundationApi
+@Composable
+fun TicTacToeGrid(game: TicTacToeGame.State) {
+    LazyVerticalGrid(cells = GridCells.Fixed(3), modifier = Modifier.fillMaxWidth()) {
     }
 }
