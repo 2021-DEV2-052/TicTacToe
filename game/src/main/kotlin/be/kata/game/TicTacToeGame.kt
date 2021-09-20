@@ -44,9 +44,14 @@ class TicTacToeGame {
     private fun alterStatusIfNeeded() {
         val winComboMatches = winComboMatches()
         if (allSquaresClaimed() || winComboMatches) {
-            status = Ended(if (winComboMatches) activePlayer else null)
+            status = if (winComboMatches) {
+                Winner(activePlayer)
+            } else {
+                Draw
+            }
         }
     }
+
     private fun winComboMatches() =
         WIN_COMBOS
             .any { winCombo ->
@@ -74,7 +79,11 @@ class TicTacToeGame {
         override val ended: Boolean = false
     }
 
-    data class Ended(val winningPlayer: Player?) : Status() {
+    abstract class Ended : Status() {
         override val ended: Boolean = true
     }
+
+    data class Winner(val winningPlayer: Player) : Ended()
+
+    object Draw : Ended()
 }

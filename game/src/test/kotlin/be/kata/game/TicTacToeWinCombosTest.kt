@@ -8,8 +8,6 @@ class TicTacToeWinCombosTest {
 
     private lateinit var game: TicTacToeGame
 
-    private fun generateNumberToClaim() = (0 until TicTacToeGame.FIELD_SIZE).random()
-
     @BeforeEach
     fun setup() {
         game = TicTacToeGame()
@@ -23,7 +21,7 @@ class TicTacToeWinCombosTest {
         game.playTurn(4)
         val gameState = game.playTurn(2)
         assertEquals(
-            TicTacToeGame.Ended(TicTacToeGame.Player.PLAYER_1),
+            TicTacToeGame.Winner(TicTacToeGame.Player.PLAYER_1),
             gameState.status,
             "game should be stopped after a win combo is played"
         )
@@ -37,7 +35,7 @@ class TicTacToeWinCombosTest {
         game.playTurn(1)
         val gameState = game.playTurn(5)
         assertEquals(
-            TicTacToeGame.Ended(TicTacToeGame.Player.PLAYER_1),
+            TicTacToeGame.Winner(TicTacToeGame.Player.PLAYER_1),
             gameState.status,
             "game should be stopped after a win combo is played"
         )
@@ -51,7 +49,7 @@ class TicTacToeWinCombosTest {
         game.playTurn(4)
         val gameState = game.playTurn(8)
         assertEquals(
-            TicTacToeGame.Ended(TicTacToeGame.Player.PLAYER_1),
+            TicTacToeGame.Winner(TicTacToeGame.Player.PLAYER_1),
             gameState.status,
             "game should be stopped after a win combo is played"
         )
@@ -65,7 +63,7 @@ class TicTacToeWinCombosTest {
         game.playTurn(4)
         val gameState = game.playTurn(6)
         assertEquals(
-            TicTacToeGame.Ended(TicTacToeGame.Player.PLAYER_1),
+            TicTacToeGame.Winner(TicTacToeGame.Player.PLAYER_1),
             gameState.status,
             "game should be stopped after a win combo is played"
         )
@@ -79,7 +77,7 @@ class TicTacToeWinCombosTest {
         game.playTurn(0)
         val gameState = game.playTurn(7)
         assertEquals(
-            TicTacToeGame.Ended(TicTacToeGame.Player.PLAYER_1),
+            TicTacToeGame.Winner(TicTacToeGame.Player.PLAYER_1),
             gameState.status,
             "game should be stopped after a win combo is played"
         )
@@ -93,7 +91,7 @@ class TicTacToeWinCombosTest {
         game.playTurn(4)
         val gameState = game.playTurn(2)
         assertEquals(
-            TicTacToeGame.Ended(TicTacToeGame.Player.PLAYER_1),
+            TicTacToeGame.Winner(TicTacToeGame.Player.PLAYER_1),
             gameState.status,
             "game should be stopped after a win combo is played"
         )
@@ -107,7 +105,7 @@ class TicTacToeWinCombosTest {
         game.playTurn(1)
         val gameState = game.playTurn(8)
         assertEquals(
-            TicTacToeGame.Ended(TicTacToeGame.Player.PLAYER_1),
+            TicTacToeGame.Winner(TicTacToeGame.Player.PLAYER_1),
             gameState.status,
             "game should be stopped after a win combo is played"
         )
@@ -121,7 +119,7 @@ class TicTacToeWinCombosTest {
         game.playTurn(0)
         val gameState = game.playTurn(2)
         assertEquals(
-            TicTacToeGame.Ended(TicTacToeGame.Player.PLAYER_1),
+            TicTacToeGame.Winner(TicTacToeGame.Player.PLAYER_1),
             gameState.status,
             "game should be stopped after a win combo is played"
         )

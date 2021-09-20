@@ -95,7 +95,7 @@ class TicTacToeGameTest {
         val gameState = game.playTurn(2)
         assertEquals(
             TicTacToeGame.Player.PLAYER_1,
-            (gameState.status as TicTacToeGame.Ended).winningPlayer,
+            (gameState.status as TicTacToeGame.Winner).winningPlayer,
             "game should be stopped after a win combo is played"
         )
     }
@@ -110,5 +110,23 @@ class TicTacToeGameTest {
         assertThrows<IllegalStateException>("playing after end is not possible") {
             game.playTurn(5)
         }
+    }
+
+    @Test
+    fun gameIsDrawAfter9TurnsWithoutWinCombo() {
+        game.playTurn(0)
+        game.playTurn(3)
+        game.playTurn(1)
+        game.playTurn(4)
+        game.playTurn(5)
+        game.playTurn(2)
+        game.playTurn(6)
+        game.playTurn(8)
+        val gameState = game.playTurn(7)
+        assertEquals(
+            TicTacToeGame.Draw,
+            gameState.status,
+            "game is a draw with all fields filled without wincombo"
+        )
     }
 }
