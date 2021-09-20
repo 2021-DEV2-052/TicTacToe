@@ -68,4 +68,14 @@ class TicTacToeGameTest {
         assertTrue("game should be stopped after 9 turns") { game.ended }
     }
 
+    @Test
+    fun gameEndsIfAWinComboIsNoticed() {
+        game.playTurn(0)
+        game.playTurn(3)
+        game.playTurn(1)
+        game.playTurn(4)
+        game.playTurn(2)
+        assertTrue("game should be stopped after a win combo is played") { game.ended }
+    }
+
 }
