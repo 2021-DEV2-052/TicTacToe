@@ -51,16 +51,27 @@ fun TicTacToeScreen(gameState: TicTacToeGame.State, onSquareClick: (Int) -> Unit
             color = MaterialTheme.colors.onSurface
         )
         TicTacToeGrid(boardState = gameState.field, onSquareClick = onSquareClick)
-        if (gameState.status is TicTacToeGame.Winner) {
-            Text(
-                text = stringResource(
-                    id = R.string.win_message,
-                    if ((gameState.status as TicTacToeGame.Winner).winningPlayer == TicTacToeGame.Player.PLAYER_1)
-                        stringResource(R.string.player1) else stringResource(R.string.player_2)
+        when (gameState.status) {
+            is TicTacToeGame.Winner -> {
+                Text(
+                    text = stringResource(
+                        id = R.string.win_message,
+                        if ((gameState.status as TicTacToeGame.Winner).winningPlayer == TicTacToeGame.Player.PLAYER_1)
+                            stringResource(R.string.player1) else stringResource(R.string.player_2)
+                    )
                 )
-            )
-        } else if (gameState.status is TicTacToeGame.Draw) {
-            Text(text = stringResource(id = R.string.draw_message))
+            }
+            is TicTacToeGame.Draw -> {
+                Text(text = stringResource(id = R.string.draw_message))
+            }
+            is TicTacToeGame.Playing -> {
+                Text(text = stringResource(
+                    id = R.string.playing_message,
+                    if ((gameState.status as TicTacToeGame.Playing).activePlayer == TicTacToeGame.Player.PLAYER_1)
+                        stringResource(R.string.player1) else stringResource(R.string.player_2)
+                ))
+            }
+            else -> throw IllegalArgumentException("this should not happen")
         }
     }
 }
