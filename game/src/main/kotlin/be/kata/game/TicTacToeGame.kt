@@ -3,7 +3,7 @@ package be.kata.game
 class TicTacToeGame {
 
     companion object {
-        private const val FIELD_SIZE = 9
+        const val FIELD_SIZE = 9
     }
 
     private val _field: Array<Player?> = arrayOfNulls(FIELD_SIZE)
