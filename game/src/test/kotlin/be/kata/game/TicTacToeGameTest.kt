@@ -78,4 +78,18 @@ class TicTacToeGameTest {
         assertTrue("game should be stopped after a win combo is played") { gameState.ended }
     }
 
+    @Test
+    fun playerWinsIfAWinComboIsNoticed() {
+        game.playTurn(0)
+        game.playTurn(3)
+        game.playTurn(1)
+        game.playTurn(4)
+        val gameState = game.playTurn(2)
+        assertEquals(
+            TicTacToeGame.Player.PLAYER_1,
+            gameState.winner,
+            "game should be stopped after a win combo is played"
+        )
+    }
+
 }

@@ -47,5 +47,5 @@ class TicTacToeGame {
         PLAYER_1, PLAYER_2
     }
 
-    data class State(val field: List<TicTacToeSquare>, val activePlayer: Player, val ended: Boolean)
+    data class State(val field: List<TicTacToeSquare>, val activePlayer: Player, val ended: Boolean, val winner: Player? = null)
 }
