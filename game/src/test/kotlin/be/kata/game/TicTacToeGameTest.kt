@@ -10,4 +10,10 @@ class TicTacToeGameTest {
         val game = TicTacToeGame()
         assert(game.activePlayer == TicTacToeGame.Player.PLAYER_1)
     }
+
+    @Test
+    fun gameExposesAFieldWith9Squares() {
+        val game = TicTacToeGame()
+        assert(game.field.size == 9)
+    }
 }
