@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import be.kata.game.Nothing
-import be.kata.game.TicTacToeGame
 import be.kata.game.TicTacToeGame.Companion.FIELD_SIZE
 import be.kata.tictactoe.compose.screen.TicTacToeGrid
 import org.junit.Assert
@@ -21,11 +20,8 @@ class TicTacToeGridTest {
     fun testGridHas9Squares() {
         composeRule.setContent {
             TicTacToeGrid(
-                game = TicTacToeGame.State(
-                    List(FIELD_SIZE) { Nothing },
-                    TicTacToeGame.Playing(TicTacToeGame.Player.PLAYER_1)
-                ),
-                onSquareClick = {}
+                boardState = List(FIELD_SIZE) { Nothing },
+                onSquareClick = { }
             )
         }
         composeRule.onRoot().onChild().onChildren().assertCountEquals(9)
@@ -38,10 +34,7 @@ class TicTacToeGridTest {
         val onClick: (Int) -> Unit = { number = it }
         composeRule.setContent {
             TicTacToeGrid(
-                game = TicTacToeGame.State(
-                    List(FIELD_SIZE) { Nothing },
-                    TicTacToeGame.Playing(TicTacToeGame.Player.PLAYER_1)
-                ),
+                boardState = List(FIELD_SIZE) { Nothing },
                 onSquareClick = onClick
             )
         }
