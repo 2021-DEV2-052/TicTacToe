@@ -4,6 +4,7 @@ class TicTacToeGame {
 
     companion object {
         const val FIELD_SIZE = 9
+        private val WIN_COMBO = listOf(0, 1, 2)
     }
 
     private val _field: Array<TicTacToeSquare> = Array(9) { Nothing }
@@ -17,8 +18,8 @@ class TicTacToeGame {
 
     fun playTurn(squareOrdinalToClaim: Int) {
         claimSquare(squareOrdinalToClaim)
-        switchPlayer()
         checkForEndCondition()
+        switchPlayer()
     }
 
     private fun claimSquare(squareOrdinal: Int) {
@@ -26,7 +27,9 @@ class TicTacToeGame {
     }
 
     private fun checkForEndCondition() {
-        if (field.all { it is Claimed }) { _ended = true }
+        if (field.all { it is Claimed } || WIN_COMBO.map { _field[it] }.all { it is Claimed && it.player == activePlayer }) {
+            _ended = true
+        }
     }
 
     private fun switchPlayer() {
