@@ -13,7 +13,7 @@ class TicTacToeGame {
     val activePlayer get() = _activePlayer
 
     fun claimSquare(squareToClaim: Int) {
-
+        _field[squareToClaim] = Player.PLAYER_1
     }
 
     enum class Player {
