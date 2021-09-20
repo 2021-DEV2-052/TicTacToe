@@ -20,9 +20,7 @@ class TicTacToeGame {
     fun playTurn(squareOrdinalToClaim: Int): State {
         claimSquare(squareOrdinalToClaim)
         checkForEndCondition()
-        if (findWinComboMatch()) {
-            winner = activePlayer
-        }
+        checkForWinner()
         switchPlayer()
         return state
     }
@@ -36,12 +34,18 @@ class TicTacToeGame {
     }
 
     private fun checkForEndCondition() {
-        if (allSquaresClaimed() || findWinComboMatch()) {
+        if (allSquaresClaimed() || winComboMatches()) {
             ended = true
         }
     }
 
-    private fun findWinComboMatch() =
+    private fun checkForWinner() {
+        if (ended && winComboMatches()) {
+            winner = activePlayer
+        }
+    }
+
+    private fun winComboMatches() =
         WIN_COMBO
             .map { squareOrdinal -> gameField[squareOrdinal] }
             .all { square -> square is Claimed && square.player == activePlayer }
