@@ -74,5 +74,8 @@ fun TicTacToeSquareView(
 @Composable
 fun TicTacToeGrid(game: TicTacToeGame.State) {
     LazyVerticalGrid(cells = GridCells.Fixed(3), modifier = Modifier.fillMaxWidth()) {
+        itemsIndexed(game.field) { index, squareState ->
+            TicTacToeSquareView(squareState, index) {}
+        }
     }
 }
