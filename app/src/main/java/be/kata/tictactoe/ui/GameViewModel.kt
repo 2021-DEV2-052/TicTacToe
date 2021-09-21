@@ -1,6 +1,7 @@
 package be.kata.tictactoe.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import be.kata.game.TicTacToeGame
 import be.kata.tictactoe.TicTacToeActivity
 import be.kata.tictactoe.data.GameCreator
@@ -8,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
-class GameViewModel(private val gameCreator: GameCreator) : ViewModel() {
+class GameViewModel(gameCreator: GameCreator) : ViewModel() {
 
     private val game = gameCreator.createGame()
 
@@ -26,4 +27,16 @@ class GameViewModel(private val gameCreator: GameCreator) : ViewModel() {
             _uiState.update { TicTacToeActivity.ErrorState(exception) }
         }
     }
+
+    class Factory(private val gameCreator: GameCreator) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(GameViewModel::class.java)) {
+                return GameViewModel(gameCreator) as T
+            } else {
+                throw IllegalArgumentException("no model class known")
+            }
+        }
+    }
 }
+
