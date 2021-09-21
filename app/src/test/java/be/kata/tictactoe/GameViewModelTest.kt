@@ -82,4 +82,22 @@ class GameViewModelTest {
             viewModel.uiState.value
         )
     }
+
+    @Test
+    fun aValidClickShouldShowNewGameState() {
+        val mockState: TicTacToeGame.State = mock()
+        val clickedSquare = 1
+        val mockedGame = mock<TicTacToeGame> {
+            on { playTurn(clickedSquare) } doReturn mockState
+        }
+        val viewModel = GameViewModel(mock {
+            on { createGame() } doReturn mockedGame
+        })
+        viewModel.handleSquareClicked(clickedSquare)
+        assertEquals(
+            "UI should have error state",
+            mockState,
+            viewModel.gameState.value
+        )
+    }
 }
