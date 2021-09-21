@@ -1,12 +1,11 @@
 package be.kata.tictactoe
 
+import be.kata.game.GameHasEndedException
 import be.kata.game.TicTacToeGame
 import be.kata.tictactoe.ui.GameViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
+import org.mockito.kotlin.*
 
 class GameViewModelTest {
 
@@ -43,5 +42,23 @@ class GameViewModelTest {
         val clickedSquare = 0
         viewModel.handleSquareClicked(clickedSquare)
         verify(mockedGame).playTurn(clickedSquare)
+    }
+
+    @Test
+    fun anErrorInGameWillLeadToErrorState() {
+        val exception = GameHasEndedException("")
+        val mockedGame = mock<TicTacToeGame> {
+            on { playTurn(any()) } doThrow exception
+        }
+        val viewModel = GameViewModel(mock {
+            on { createGame() } doReturn mockedGame
+        })
+        val clickedSquare = 0
+        viewModel.handleSquareClicked(clickedSquare)
+        assertEquals(
+            "UI should have error state",
+            TicTacToeActivity.ErrorState(exception),
+            viewModel.uiState.value
+        )
     }
 }
