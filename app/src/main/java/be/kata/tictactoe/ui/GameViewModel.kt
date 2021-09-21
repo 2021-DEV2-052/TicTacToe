@@ -6,6 +6,7 @@ import be.kata.tictactoe.TicTacToeActivity
 import be.kata.tictactoe.data.GameCreator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 class GameViewModel(private val gameCreator: GameCreator) : ViewModel() {
 
@@ -14,10 +15,14 @@ class GameViewModel(private val gameCreator: GameCreator) : ViewModel() {
     private val _gameState = MutableStateFlow(game.state)
     val gameState: StateFlow<TicTacToeGame.State> = _gameState
 
-    private val _uiState = MutableStateFlow(TicTacToeActivity.Normal)
+    private val _uiState = MutableStateFlow<TicTacToeActivity.UIState>(TicTacToeActivity.Normal)
     val uiState: StateFlow<TicTacToeActivity.UIState> = _uiState
 
     fun handleSquareClicked(clickedSquare: Int) {
-        game.playTurn(clickedSquare)
+        try {
+            game.playTurn(clickedSquare)
+        } catch (exception: Exception) {
+            _uiState.update { TicTacToeActivity.ErrorState(exception) }
+        }
     }
 }
