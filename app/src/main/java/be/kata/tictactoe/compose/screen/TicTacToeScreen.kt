@@ -37,12 +37,17 @@ fun TicTacToeScreenPreview() {
             TicTacToeGame.Playing(TicTacToeGame.Player.PLAYER_1)
         ),
         onSquareClick = { println("clicked $it") },
+        uiState = TicTacToeActivity.Normal
     )
 }
 
 @ExperimentalFoundationApi
 @Composable
-fun TicTacToeScreen(gameState: TicTacToeGame.State, onSquareClick: (Int) -> Unit) {
+fun TicTacToeScreen(
+    gameState: TicTacToeGame.State,
+    onSquareClick: (Int) -> Unit,
+    uiState: TicTacToeActivity.UIState
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = stringResource(id = R.string.app_name),
@@ -51,6 +56,7 @@ fun TicTacToeScreen(gameState: TicTacToeGame.State, onSquareClick: (Int) -> Unit
         )
         TicTacToeGrid(boardState = gameState.field, onSquareClick = onSquareClick)
         TicTacToeStatusText(status = gameState.status)
+        TicTacToeInfoText(status = uiState)
     }
 }
 

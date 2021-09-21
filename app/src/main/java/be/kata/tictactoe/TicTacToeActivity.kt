@@ -13,6 +13,7 @@ class TicTacToeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TicTacToeAppTheme {
+
             }
         }
     }
@@ -21,3 +22,5 @@ class TicTacToeActivity : AppCompatActivity() {
     data class ErrorState(val exception: Exception) : UIState()
     object Normal : UIState()
 }
+
+
