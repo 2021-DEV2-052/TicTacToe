@@ -13,6 +13,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,10 +24,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import be.kata.game.*
 import be.kata.game.Nothing
 import be.kata.tictactoe.R
 import be.kata.tictactoe.TicTacToeActivity
+import be.kata.tictactoe.ui.GameViewModel
 
 @ExperimentalFoundationApi
 @Preview(showBackground = true)
@@ -55,6 +59,26 @@ fun TicTacToeScreen(
             color = MaterialTheme.colors.onSurface
         )
         TicTacToeGrid(boardState = gameState.field, onSquareClick = onSquareClick)
+        TicTacToeStatusText(status = gameState.status)
+        TicTacToeInfoText(status = uiState)
+    }
+}
+
+@ExperimentalFoundationApi
+@Composable
+fun TicTacToeScreen(
+    gameViewModel: GameViewModel = viewModel()
+) {
+    val gameState: TicTacToeGame.State by gameViewModel.gameState.collectAsState()
+    val uiState: TicTacToeActivity.UIState by gameViewModel.uiState.collectAsState()
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = stringResource(id = R.string.app_name),
+            style = MaterialTheme.typography.h2,
+            color = MaterialTheme.colors.onSurface
+        )
+        TicTacToeGrid(
+            boardState = gameState.field, onSquareClick = { gameViewModel.handleSquareClicked(it) })
         TicTacToeStatusText(status = gameState.status)
         TicTacToeInfoText(status = uiState)
     }

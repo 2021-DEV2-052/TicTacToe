@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
+import be.kata.tictactoe.compose.screen.TicTacToeScreen
 import be.kata.tictactoe.compose.theme.TicTacToeAppTheme
 
 class TicTacToeActivity : AppCompatActivity() {
@@ -13,7 +14,7 @@ class TicTacToeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TicTacToeAppTheme {
-
+                TicTacToeScreen()
             }
         }
     }
