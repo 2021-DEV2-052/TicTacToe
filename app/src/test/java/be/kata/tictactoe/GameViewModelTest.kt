@@ -6,6 +6,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 class GameViewModelTest {
 
@@ -31,5 +32,16 @@ class GameViewModelTest {
             TicTacToeGame.Playing(TicTacToeGame.Player.PLAYER_1),
             viewModel.gameState.value.status
         )
+    }
+
+    @Test
+    fun clicksWillGoToTheGame() {
+        val mockedGame = mock<TicTacToeGame> {}
+        val viewModel = GameViewModel(mock {
+            on { createGame() } doReturn mockedGame
+        })
+        val clickedSquare = 0
+        viewModel.handleSquareClicked(clickedSquare)
+        verify(mockedGame).playTurn(clickedSquare)
     }
 }

@@ -16,4 +16,8 @@ class GameViewModel(private val gameCreator: GameCreator) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TicTacToeActivity.Normal)
     val uiState: StateFlow<TicTacToeActivity.UIState> = _uiState
+
+    fun handleSquareClicked(clickedSquare: Int) {
+
+    }
 }
