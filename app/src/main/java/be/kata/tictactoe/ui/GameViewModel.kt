@@ -21,6 +21,7 @@ class GameViewModel(private val gameCreator: GameCreator) : ViewModel() {
     fun handleSquareClicked(clickedSquare: Int) {
         try {
             game.playTurn(clickedSquare)
+            _uiState.update { TicTacToeActivity.Normal }
         } catch (exception: Exception) {
             _uiState.update { TicTacToeActivity.ErrorState(exception) }
         }
