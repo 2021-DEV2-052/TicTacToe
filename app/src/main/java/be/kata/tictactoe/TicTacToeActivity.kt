@@ -7,12 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import be.kata.tictactoe.compose.screen.TicTacToeScreen
 import be.kata.tictactoe.compose.theme.TicTacToeAppTheme
-import be.kata.tictactoe.data.DefaultGameCreator
+import be.kata.tictactoe.data.GameCreator
 import be.kata.tictactoe.ui.GameViewModel
+import org.koin.android.ext.android.inject
 
 class TicTacToeActivity : AppCompatActivity() {
 
-    private val viewModel: GameViewModel by viewModels { GameViewModel.Factory(DefaultGameCreator()) }
+    private val gameCreator: GameCreator by inject()
+
+    private val viewModel: GameViewModel by viewModels { GameViewModel.Factory(gameCreator) }
 
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {

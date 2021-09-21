@@ -1,5 +1,6 @@
 package be.kata.tictactoe.compose.screen
 
+import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,9 +23,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import be.kata.game.*
 import be.kata.game.Nothing
 import be.kata.tictactoe.R
@@ -67,12 +66,13 @@ fun TicTacToeScreen(
 @ExperimentalFoundationApi
 @Composable
 fun TicTacToeScreen(
-    gameViewModel: GameViewModel = viewModel()
+    gameViewModel: GameViewModel
 ) {
     val gameState: TicTacToeGame.State by gameViewModel.gameState.collectAsState()
     val uiState: TicTacToeActivity.UIState by gameViewModel.uiState.collectAsState()
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
+    if (LocalConfiguration.current.orientation == ORIENTATION_PORTRAIT) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
             text = stringResource(id = R.string.app_name),
             style = MaterialTheme.typography.h2,
             color = MaterialTheme.colors.onSurface
@@ -81,6 +81,28 @@ fun TicTacToeScreen(
             boardState = gameState.field, onSquareClick = { gameViewModel.handleSquareClicked(it) })
         TicTacToeStatusText(status = gameState.status)
         TicTacToeInfoText(status = uiState)
+        }
+    } else {
+        Row {
+            Column (
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = stringResource(id = R.string.app_name),
+                    style = MaterialTheme.typography.h2,
+                    color = MaterialTheme.colors.onSurface
+                )
+                TicTacToeStatusText(status = gameState.status)
+                TicTacToeInfoText(status = uiState)
+            }
+            Column (modifier = Modifier.weight(1f)) {
+                TicTacToeGrid(
+                boardState = gameState.field,
+                onSquareClick = { gameViewModel.handleSquareClicked(it) }
+
+                )
+            }
+        }
     }
 }
 
@@ -103,9 +125,13 @@ fun TicTacToeGrid(boardState: List<TicTacToeSquare>, onSquareClick: (Int) -> Uni
 fun TicTacToeSquareView(
     squareState: TicTacToeSquare,
     ordinal: Int,
-    onClick: (Int) -> Unit,
-    size: Dp = (LocalConfiguration.current.screenWidthDp / 3).dp,
+    onClick: (Int) -> Unit
 ) {
+    val size = if (LocalConfiguration.current.orientation == ORIENTATION_PORTRAIT) {
+        (LocalConfiguration.current.screenWidthDp / 3).dp
+    } else {
+        (LocalConfiguration.current.screenWidthDp / 6).dp
+    }
     Surface(
         modifier = Modifier
             .size(size)
